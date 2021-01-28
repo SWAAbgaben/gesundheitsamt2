@@ -1,0 +1,41 @@
+New Project
+    Gradle
+        ggf. [Project SDK] New
+            "C:\Zimmermann\Java\jdk"
+
+GroupId     de.hka
+ArtifactId  meinProjektName
+Version     1.0
+
+Beispiel 0 kopieren
+settings.gradle loeschen
+src\main\java loeschen
+src\test\java loeschen
+In settings.gradle.kts den obigen Projektnamen statt "kunde" eintragen
+
+In IntelliJ: File > Settings > Build, Execution, Deployment
+    Build Tools
+        Gradle
+            Use Gradle from:    Specified location
+    Compiler
+        Kotlin Compiler
+            Target JVM Version  12
+
+An Beispiel 1, 2 oder 3 orientieren (oder kopieren)
+
+Icon "Project Structure" (rechte obere Ecke)
+    Facets
+        +
+            Spring
+                meinProjektName_main
+                + (rechtes Teilfenster mit "Application")
+                    Parent context:   Application
+                    kunden_main:      Haken setzen
+
+Icon "Edit Configurations" (rechte obere Ecke)
+    Defaults
+        Spring Boot
+            Active Profiles:   dev
+
+ggf. in einer Powershell
+    gradle compileTestKotlin

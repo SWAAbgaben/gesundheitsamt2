@@ -1,0 +1,60 @@
+# Copyright (C) 2020 - present Juergen Zimmermann, Hochschule Karlsruhe
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# https://logging.apache.org/log4j/2.x/manual/configuration.html
+# https://logging.apache.org/log4j/2.x/manual/layouts.html
+# https://www.baeldung.com/spring-boot-logging
+
+Configuration:
+  appenders:
+    Console:
+      name: Console
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: "%style{%date{ISO8601}} %highlight{%-5level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, TRACE=magenta}[%style{%threadName}{bright,blue}] %style{%logger{1.}}{bright,yellow}: %message%n%throwable"
+
+    RollingFile:
+      name: RollingFile
+      fileName: ${env:LOG_PATH:-./tmp}/application.log
+      filePattern: ${env:LOG_PATH:-./tmp}/application-%date{yyyy-MM-dd}-%i.log.gz
+      PatternLayout:
+        Pattern: "%date %level %logger{1.} [%threadName] %message%n"
+      Policies:
+        OnStartupTriggeringPolicy: {}
+        SizeBasedTriggeringPolicy:
+          size: 10MB
+        TimeBasedTriggeringPolicy: {}
+
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: Console
+        - ref: RollingFile
+
+    logger:
+      - name: com.acme
+        level: trace
+      - name: org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener
+        level: warn
+      - name: org.springframework.security.core.userdetails.User
+        level: error
+
+      - name: org.springframework.http.codec.json.Jackson2JsonEncoder
+        level: debug
+      - name: org.springframework.web.server.adapter.HttpWebHandlerAdapter
+        level: debug
+      - name: org.springframework.boot.test.context.SpringBootTestContextBootstrapper
+        level: warn

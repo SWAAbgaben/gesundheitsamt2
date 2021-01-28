@@ -1,0 +1,30 @@
+// Eine neue gesundheitsamt anlegen
+POST {{baseUrl}}/api
+Content-Type: application/json
+Authorization: {{basic-auth}}
+Host: {{host}}
+ALPN: h2
+
+< data/gesundheitsamt-neu.json
+
+###
+
+// Eine leere gesundheitsamt anlegen
+POST {{baseUrl}}/api
+Content-Type: application/json
+Authorization: {{basic-auth}}
+Host: {{host}}
+ALPN: h2
+
+< data/gesundheitsamt-neu-leer.json
+
+###
+
+// Eine ungueltige gesundheitsamt anlegen
+POST {{baseUrl}}/api
+Content-Type: application/json
+Authorization: {{basic-auth}}
+Host: {{host}}
+ALPN: h2
+
+< data/gesundheitsamt-neu-invalid.json
